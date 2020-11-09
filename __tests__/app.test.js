@@ -59,6 +59,27 @@ describe('chonky-cat-api-backend routes', () => {
         });
       });
   });
+
+  it('deletes a chonk by id', async() => {
+    const chonk = await Chonk.insert({
+      name: 'Cinderblock',
+      weight: 10,
+      description: 'Insta-famous cat that is in much better shape these days.',
+      imageUrl: 'https://cinderblock.com/cinderblock.png'
+    });
+
+    return request(app)
+      .delete(`/chonks/${chonk.id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          name: 'Cinderblock',
+          weight: '10',
+          description: 'Insta-famous cat that is in much better shape these days.',
+          imageUrl: 'https://cinderblock.com/cinderblock.png'
+        });
+      });
+  });
 });
 
 
